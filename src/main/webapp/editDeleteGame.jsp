@@ -99,16 +99,8 @@ $('#updateForm').validate({
                 <input type="text" name="image" id="image" value="${image}">
             </div>
         </div>
-            
-              
-              <button class="btn btn-danger" id="submit" name="submit" value="delete" type="submit" >delete</button>
-                
-             
-                    
-                     <button class="btn btn-success"  id="submit" name="submit" type="submit">Update Game</button>
-            
-                
-            
+              <button class="btn btn-danger" name="submit" value="delete" type="submit" >delete</button>
+              <button class="btn btn-success" name="submit"  value="update" type="submit">Update Game</button>
         </form>
                 
             </div>

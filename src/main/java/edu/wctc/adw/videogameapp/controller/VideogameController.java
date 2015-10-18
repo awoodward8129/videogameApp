@@ -55,6 +55,8 @@ private static final String NO_PARAM_ERR_MSG = "No request parameter identified"
     private static final String DELETE_ACTION = "delete";
     private static final String ACTION_PARAM = "action";
     private static final String ACTION_REDIRECT = "redirect";
+    private int count=0;
+   
     
     
         // Get init params from web.xml
@@ -82,47 +84,36 @@ private static final String NO_PARAM_ERR_MSG = "No request parameter identified"
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter(ACTION_PARAM);
-    
+      
+        
+        
                 try {
             
-            VideogameService videogameService = injectDependenciesAndGetVideogameService();
+         VideogameService videogameService = injectDependenciesAndGetVideogameService();
         
          HttpSession session = request.getSession();
-        ServletContext ctx = request.getServletContext();
-        
-       if(action.equals("session")){
-    
-        String fontColor = request.getParameter("fontColor");
-        
-        if(action != null && action.equals("end")) {
-            session.invalidate();
-            if(destination.equalsIgnoreCase("home")) {
-                response.sendRedirect("index.jsp");
-            } else {
-                response.sendRedirect("testsession.jsp");
-            }
-        } else {
-            String color = request.getParameter("color");
-            // Session scope is per user
-            session.setAttribute("color", color);
-            
-            // in JSP the ServletContext is referred to as 'application'
-            // and as applicatio-wide scope
-            if(fontColor != null && fontColor.length() > 0) {
-                ctx.setAttribute("fontColor", fontColor);
-            }
-            
-           getListOfVideogamesWithListPageDestination(request, videogameService);
+         ServletContext ctx = request.getServletContext();
+         
+         
+       
+         if(session.isNew()){
+         count++;
+         }
+         ctx.setAttribute("count",  count);
+         Integer counter = (Integer)session.getAttribute("counter");
+        if (counter == null ) {
+            counter = 0;
+            session.setAttribute("counter", counter);
         }
-     
-       }
-        
         
 
-
-
+           if(action.equals(ACTION_REDIRECT)){
+       
             
-            if (action.equals(LIST_ACTION)) {
+             response.sendRedirect("redirect.jsp");
+             return;
+        }
+            else if (action.equals(LIST_ACTION)) {
                 
                  getListOfVideogamesWithListPageDestination(request, videogameService);
             
@@ -149,14 +140,20 @@ private static final String NO_PARAM_ERR_MSG = "No request parameter identified"
                destination = EDIT_DELETE_PAGE;
             }
             else if(action.equals(ADD_ACTION)){
+              
+         counter = counter + 1;
+         session.setAttribute("counter", counter);
                 List values = getParameters(request);
+                
              values.remove(0);
-               videogameService.insertRecord("videogame",  values);
+                  
                getListOfVideogamesWithListPageDestination(request, videogameService);
+           
              }
             else if (action.equals(DELETE_ACTION)) {
                 
               String submitType =request.getParameter("submit");
+            
               if(submitType.equals("delete")){
              String gameId = request.getParameter("gameId");       
              videogameService.deleteByGameId("videogame", gameId);
