@@ -30,14 +30,17 @@
         <h3 style='color: ${fontColor};'>For comparison, this font color comes from application scope</h3>
         
         
-        <h1>Book List</h1>
+       
        
       <!--  <div><a href="VideogameController?action=redirect">Redirect Test</a></div> -->
         
         <div class="container">
-            
-       <a class="btn btn-primary" href="VideogameController?action=addButton">Add a Book</a>
+             <h1>Games List</h1>
+          
+            <a class="btn btn-primary" href="VideogameController?action=addButton">Add a Game</a>
        
+             
+
         <table class="table table-striped">
             <tr >
                 <th align="left" class="tableHead">ID</th>
@@ -64,7 +67,7 @@
             
              <td align="left">${b.price}</td>
             <td align="left"><img src =${b.image}/></td>
-            <td><a href="VideogameController?action=editDeleteButton&gameId=${b.gameId}&title=${b.title}&system=${b.system}&logDate=${b.logDate}&price=${b.price}&image=${b.image}">Edit or Delete</a></td>
+            <td><a class="btn btn-primary" href="VideogameController?action=editDeleteButton&gameId=${b.gameId}&title=${b.title}&system=${b.system}&logDate=${b.logDate}&price=${b.price}&image=${b.image}">Edit or Delete</a></td>
             
         </tr>
         </c:forEach>
