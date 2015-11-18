@@ -19,43 +19,7 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.js"></script>
-                  <Script>
-     $(document).ready(function () {
-
-$('#addForm').validate({
-    rules: {
-        title: {
-            minlength: 1,
-            required: true
-        },
-        system: {
-            minlength: 1,
-            required: true
-        },
-        logDate: {
-            required: true
-        },
-        price: {
-            required: true,
-            number: true
-        },
-        image: {
-            required: true
-        },
-
-    },
-    highlight: function (element) {
-        $(element).closest('.control-group').removeClass('success').addClass('error');
-    },
-    success: function (element) {
-        element.text('OK!').addClass('valid')
-            .closest('.control-group').removeClass('error').addClass('success');
-    }
-     
-
-});
-});
-        </Script>
+        <Script src="validation.js">        </Script>
         <title>Add a Game</title>
     </head>
     <body>
@@ -66,7 +30,7 @@ $('#addForm').validate({
             
         <div class="row container">
             <div class="col-md-4">
-                <form id="addForm" method="POST" action="VideogameController?action=add" role="form"  >
+                <form id="form" method="POST" action="VideogameController?action=add" role="form"  >
                     
             <div class="control-group">
             <label class="control-label" for="name">Title</label>
@@ -98,40 +62,7 @@ $('#addForm').validate({
                 <input type="text" name="image" id="image" placeholder="www.myimage.com">
             </div>
         </div>
-                    
-          <!--  <table>
-                <tr>
-                    <td>
-                        Title <input id="title" class="form-control" type="text" name="title" value=""/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-            System <input id="system" class="form-control" type="text" name="system" value=""/>
-                    </td>
-            </tr>
-       
-             <tr>
-                <td>
-                    <!-- type can be date but need to figure out how to convert it to the right format  
-            Date Logged <input id="logDate" class="form-control" type="date" name="logDate" value=""/>
-                </td>
-            </tr>
-             <tr>
-                <td>
-                    
-             Price <input id="price" type="text" class="form-control" name="price" value= "${price}"/>
-                </td>
-            </tr>
-               <tr>
-                <td>
-                    
-                    Image <input id="image" type="text" class="form-control" name="image" value= "${image}"/>
-                </td>
-            </tr>
-           
-             </table>
-                -->
+        
                 <button class="btn btn-success" type="submit">Submit Game</button>
         </form>
                 

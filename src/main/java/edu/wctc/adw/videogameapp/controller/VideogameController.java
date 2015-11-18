@@ -47,15 +47,17 @@ private static final String NO_PARAM_ERR_MSG = "No request parameter identified"
     private static final String LIST_PAGE = "/gameList.jsp";
     private static final String ADD_PAGE = "/addGame.jsp";
      private static final String EDIT_DELETE_PAGE = "/editDeleteGame.jsp";
+       private static final String REDIRECT_PAGE = "redirect.jsp";
     private static final String LIST_ACTION = "list";
     private static final String ADD_BUTTON = "addButton";
     private static final String EDIT_DELETE_BUTTON = "editDeleteButton";
       private static final String ADD_ACTION = "add";
     private static final String UPDATE_ACTION = "update";
     private static final String DELETE_ACTION = "delete";
+     private static final String DELETE_OR_EDIT_ACTION = "deleteOrEdit";
     private static final String ACTION_PARAM = "action";
     private static final String ACTION_REDIRECT = "redirect";
-    private int count=0;
+    private int userCount=0;
    
     
     
@@ -66,9 +68,7 @@ private static final String NO_PARAM_ERR_MSG = "No request parameter identified"
     private String password;
     private String dbStrategyClassName;
     private String daoClassName;
-    private DbStrategy db;
-    private VideogameDAO videogameDao;
-    private String destination;
+     private String destination;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -84,98 +84,75 @@ private static final String NO_PARAM_ERR_MSG = "No request parameter identified"
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter(ACTION_PARAM);
-      
-        
-        
-                try {
-            
-         VideogameService videogameService = injectDependenciesAndGetVideogameService();
-        
-         HttpSession session = request.getSession();
-         ServletContext ctx = request.getServletContext();
-         
-         
-       
-         if(session.isNew()){
-         count++;
+      try 
+      {
+            VideogameService videogameService = injectDependenciesAndGetVideogameService();
+            HttpSession session = request.getSession();
+            ServletContext ctx = request.getServletContext();
+        if(session.isNew()){
+            userCount++;
          }
-         ctx.setAttribute("count",  count);
-         Integer counter = (Integer)session.getAttribute("counter");
-        if (counter == null ) {
-            counter = 0;
-            session.setAttribute("counter", counter);
+            ctx.setAttribute("count",  userCount);
+            Integer recordsAddCounter = (Integer)session.getAttribute("counter");
+         if (recordsAddCounter == null ) {
+               recordsAddCounter = 0;
+               session.setAttribute("counter", recordsAddCounter);
         }
-        
 
-           if(action.equals(ACTION_REDIRECT)){
-       
-            
-             response.sendRedirect("redirect.jsp");
-             return;
-        }
-            else if (action.equals(LIST_ACTION)) {
-                
-                 getListOfVideogamesWithListPageDestination(request, videogameService);
-            
-             }
-             else if (action.equals(ADD_BUTTON)) {
-               destination = ADD_PAGE;
-                
-             }        
-             else if(action.equals(EDIT_DELETE_BUTTON)){
-               
-                List values = getParameters( request);
-                String gameId = (String)values.get(0);
-                request.setAttribute("gameId", gameId);
-                String title =  (String)values.get(1);
-                request.setAttribute("title", title);
-                 String system =  (String)values.get(2);
-                request.setAttribute("system", system);
-                String logDate =  (String)values.get(3);
-                request.setAttribute("logDate", logDate);
-                String price =  (String)values.get(4);
-                request.setAttribute("price", price);
-                 String image =  (String)values.get(5);
-                request.setAttribute("image", price);
-               destination = EDIT_DELETE_PAGE;
-            }
-            else if(action.equals(ADD_ACTION)){
-              
-         counter = counter + 1;
-         session.setAttribute("counter", counter);
-                List values = getParameters(request);
-                
-             values.remove(0);
-                  
+        if(action.equals(ACTION_REDIRECT)){
+           response.sendRedirect(REDIRECT_PAGE);
+                return;
+           }
+        else if (action.equals(LIST_ACTION)) {
                getListOfVideogamesWithListPageDestination(request, videogameService);
-           
-             }
-            else if (action.equals(DELETE_ACTION)) {
-                
-              String submitType =request.getParameter("submit");
-            
-              if(submitType.equals("delete")){
-             String gameId = request.getParameter("gameId");       
-             videogameService.deleteByGameId("videogame", gameId);
-             
-             
-              }else if (submitType.equals("update")){
-                  
-             videogameService.updateRecord("videogame", getParameters( request), "videogame_id", getParameters( request).get(0));
-              }
-             getListOfVideogamesWithListPageDestination(request, videogameService);
-                
-            } else {
-                // no param identified in request, must be an error
-                request.setAttribute("errMsg", NO_PARAM_ERR_MSG);
-                destination = LIST_PAGE;
-            }
-            
-        } catch (Exception e) {
+           }
+        else if (action.equals(ADD_BUTTON)) {
+               destination = ADD_PAGE;
+           }        
+         else if(action.equals(EDIT_DELETE_BUTTON)){
+               List values = getParameters( request);
+                String gameId = (String)values.get(0);
+               request.setAttribute("gameId", gameId);
+               String title =  (String)values.get(1);
+               request.setAttribute("title", title);
+                String system =  (String)values.get(2);
+                request.setAttribute("system", system);
+                 String logDate =  (String)values.get(3);
+                 request.setAttribute("logDate", logDate);
+                 String price =  (String)values.get(4);
+                request.setAttribute("price", price);
+                String image =  (String)values.get(5);
+                 request.setAttribute("image", image);
+                  destination = EDIT_DELETE_PAGE;
+           }
+         else if(action.equals(ADD_ACTION)){
+
+               recordsAddCounter = recordsAddCounter + 1;
+               session.setAttribute("counter", recordsAddCounter);
+               List values = getParameters(request);
+               values.remove(0);
+               videogameService.insertRecord("videogame", values);
+               getListOfVideogamesWithListPageDestination(request, videogameService);
+           }
+         else if (action.equals(DELETE_OR_EDIT_ACTION)) {
+               String submitType =request.getParameter("submit");
+               if(submitType.equals(DELETE_ACTION)){
+               String gameId = request.getParameter("gameId");       
+               videogameService.deleteByGameId("videogame", gameId);
+                 }
+              else if (submitType.equals(UPDATE_ACTION)){
+                videogameService.updateRecord("videogame", getParameters( request), "videogame_id", getParameters( request).get(0));
+                }
+            getListOfVideogamesWithListPageDestination(request, videogameService);
+           }
+        else {
+               request.setAttribute("errMsg", NO_PARAM_ERR_MSG);
+               destination = LIST_PAGE;
+           }
+        } 
+        catch (Exception e) {
             request.setAttribute("errMsg", e.getCause().getMessage());
         }
-
-        // Forward to destination page
         RequestDispatcher dispatcher
                 = getServletContext().getRequestDispatcher(destination);
         dispatcher.forward(request, response);
@@ -199,37 +176,25 @@ private static final String NO_PARAM_ERR_MSG = "No request parameter identified"
     }
     
     private void getListOfVideogamesWithListPageDestination(HttpServletRequest request, VideogameService vgs) throws Exception{
-    
-          List<Videogame> games = null;
+               List<Videogame> games = null;
                 games = vgs.getAllGames();
                 request.setAttribute("games", games);
                 destination = LIST_PAGE;
     }
      
     private VideogameService injectDependenciesAndGetVideogameService() throws Exception {
-        // Use Liskov Substitution Principle and Java Reflection to
-        // instantiate the chosen DBStrategy based on the class name retrieved
-        // from web.xml
         Class dbClass = Class.forName(dbStrategyClassName);
-        // Note that DBStrategy classes have no constructor params
         DbStrategy db = (DbStrategy) dbClass.newInstance();
-
-            // Use Liskov Substitution Principle and Java Reflection to
-        // instantiate the chosen DAO based on the class name retrieved above.
-        // This one is trickier because the available DAO classes have
-        // different constructor params
         DAOStrategy videogameDao = null;
         Class daoClass = Class.forName(daoClassName);
          Constructor constructor =null;
         try{
-     constructor = daoClass.getConstructor(new Class[]{
+        constructor = daoClass.getConstructor(new Class[]{
             DbStrategy.class, String.class, String.class, String.class, String.class
         });
         }catch(NoSuchMethodException nsme){
-        
         }
-            // This will be null if using connectin pool dao because the
-        // constructor has a different number and type of arguments
+        
       if (constructor != null) {
             Object[] constructorArgs = new Object[]{
                 db, driverClass, url, userName, password
@@ -293,19 +258,13 @@ private static final String NO_PARAM_ERR_MSG = "No request parameter identified"
     }// </editor-fold>
           @Override
     public void init() throws ServletException {
-        // Get init params from web.xml
-        //I'll use getServletContext().get
+    
         driverClass = getServletContext().getInitParameter("driverClass");
         url = getServletContext().getInitParameter("url");
         userName = getServletContext().getInitParameter("userName");
         password = getServletContext().getInitParameter("password");
         dbStrategyClassName = this.getServletContext().getInitParameter("dbStrategy");
         daoClassName = this.getServletContext().getInitParameter("videogameDao");
-
-        // You can't do the Java Reflection stuff here because exceptions
-        // are thrown that can't be handled by this stock init() method
-        // because the method signature can't be modified -- remember, you 
-        // are overriding the method.
     }
 
 }

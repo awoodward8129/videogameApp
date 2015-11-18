@@ -20,15 +20,7 @@
         <title>Games List</title>
     </head>
     <body >
-      <!--  <h1>Session Demo</h1>
-        <form method="POST" action="VideogameController?action=session">
-            Enter page background color (per user): <input name="color" value="" /> <br>
-            Enter font color (per application): <input name="fontColor" value="" /> <br>
-            <input name="submit" value="Submit" type="submit">
-        </form>
-      <!--  <p><a href="page2.jsp">Click here</a> to go to Page 2</p>
-        <p><a href="testsession.jsp">Click here</a> for Session Status</p>
-        <h3 style='color: ${fontColor};'>For comparison, this font color comes from application scope</h3>-->
+       
       
       <div class="text-right">
           <a href="#" >
@@ -81,7 +73,9 @@
             
             
              <td align="left">${b.price}</td>
-            <td align="left"><img src =${b.image}/></td>
+            
+           
+            <td align="left"><img src ="${b.image}"></img></td>
             <td><a class="btn btn-primary" href="VideogameController?action=editDeleteButton&gameId=${b.gameId}&title=${b.title}&system=${b.system}&logDate=${b.logDate}&price=${b.price}&image=${b.image}">Edit or Delete</a></td>
             
         </tr>

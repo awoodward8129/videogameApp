@@ -29,28 +29,7 @@ import javax.sql.DataSource;
  * @author Alex
  */
 public class MySqlDbStrategy implements DbStrategy {
-    
-    //prepared queries
-    // delete from book where book_id = ?
-    // select from book where title > ? and date_added > ?
-    // more secure more flexible and saves time
-    
-    // String sql ="DELETE FROM " + tableName + " WHERE " + column + "= ?";
-    // preparedStatement stmt = conn.prepareStatement(sql)
-    //stmt.setObject(1, primaryKeyValue);
-    //stmt.executeUpade();
-    //use prepared statements when you need values
-    
-    //use Lists for colDescriptors and colValues
-    //stringbuffer ssb = new stringbuffer();
-    // sb.append("hello ").append(suffix);
-    //sout(sb.toString());
-    //StringBuffer is thread safe StringBuilder is not
-    //DTO - Implicit join
-    //select e.lastName, e.firstName, d.deptName from Employee e, Department d where e.deptId = d.deptId
-    //DTO represents both tables from the join query, Data Transfer Object, imaginary databse object
-    //save method in DAO
-    //integration testing - integrating our code with database server
+ 
     
         private static boolean DEBUG=false;
         private String driverClass;
@@ -115,11 +94,11 @@ public class MySqlDbStrategy implements DbStrategy {
     public void updateRecord(String tableName, List colDescriptors, List colValues, String whereField, Object whereValue) throws Exception {
                 PreparedStatement pstmt = null;
 		
-			pstmt = buildUpdateStatement(conn,tableName,colDescriptors,whereField);
-
+			pstmt = buildUpdateStatement(conn,tableName,colDescriptors,whereField); 
 			final Iterator i=colValues.iterator();
 			int index = 1;
 			boolean doWhereValueFlag = false;
+                        
 			Object obj = null;
 			while( i.hasNext() || doWhereValueFlag) {
 				if(!doWhereValueFlag){ obj = i.next();}
@@ -180,6 +159,7 @@ public class MySqlDbStrategy implements DbStrategy {
            System.out.println("-----------");
 //          db.deleteRecordById("videogame", "videogame_id", "2");
            Videogame videogame = new Videogame();
+           videogame.setGameId(65);
          videogame.setTitle("I have an image tag and a price!");
            videogame.setSystem("Playstation 2000");
            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -201,8 +181,8 @@ public class MySqlDbStrategy implements DbStrategy {
          videogameValues.add(videogame.getLogDate());
        videogameValues.add(videogame.getPrice());
        videogameValues.add(videogame.getImage());
-          db.insertRecord("videogame", colDescription, videogameValues);
-//          db.updateRecord("videogame", colDescription, videogameValues, "videogame_id", 26);
+//          db.insertRecord("videogame", colDescription, videogameValues);
+          db.updateRecord("videogame", colDescription, videogameValues, "videogame_id", 65);
           List<Map<String,Object>> records2 = db.findAllRecords("videogame");
           for (Map record :records2 ){
               System.out.println(record);
