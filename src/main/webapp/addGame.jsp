@@ -35,7 +35,7 @@
             <div class="control-group">
             <label class="control-label" for="name">Title</label>
             <div class="controls">
-                <input type="text" name="title" id="name" placeholder="Game Title">
+                <input type="text" name="title" id="title" placeholder="Game Title">
             </div>
         </div>
           <div class="control-group">
@@ -59,7 +59,7 @@
          <div class="control-group">
             <label class="control-label" for="image">Image URL</label>
             <div class="controls">
-                <input type="text" name="image" id="image" placeholder="www.myimage.com">
+                <input type="text" name="imageUrl" id="imageUrl" placeholder="www.myimage.com">
             </div>
         </div>
         

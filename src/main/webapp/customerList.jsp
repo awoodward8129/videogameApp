@@ -37,8 +37,8 @@
             <h1 class="text-center">Games List</h1>
      
               <div class="text-center" >
-               <a class="btn btn-primary" href="VideogameController?action=addButton">Add a Game</a>
-              <a class="btn btn-primary" href="VideogameController?action=redirect">Redirect Test</a> 
+               <a class="btn btn-primary" href="CustomerController?action=addButton">Add a Game</a>
+              <a class="btn btn-primary" href="CustomerController?action=redirect">Redirect Test</a> 
               </div>
             <hr>
             <div class="text-center">
@@ -60,24 +60,23 @@
                 <th align="left" class="tableHead">Image</th>
                 <th></th>
             </tr>
-        <c:forEach var="b" items="${games}" varStatus="rowCount">
+        <c:forEach var="b" items="${customers}" varStatus="rowCount">
           
-            <td align="left">${b.videogameId}</td>
-            <td align="left">${b.title}</td>
-            <td align="left">${b.system}</td>
+            <td align="left">${b.firstName}</td>
+            <td align="left">${b.lastName}</td>
+            <td align="left">${b.address}</td>
             
             <td align="left">
-                <fmt:formatDate pattern="dd/MM/yyyy" value="${b.logDate}"></fmt:formatDate>
+               ${b.city}
                 
             </td>
             
             
-             <td align="left">${b.price}</td>
+             <td align="left">${b.state}</td>
             
            
-            <td align="left"><img src ="${b.imageUrl}"></img></td>
-            <td><a class="btn btn-primary" href="VideogameController?action=editDeleteButton&gameId=${b.videogameId}&title=${b.title}&system=${b.system}&logDate=${b.logDate}&price=${b.price}&image=${b.imageUrl}">Edit or Delete</a></td>
-            
+            <td align="left"><img src ="${b.zip}"></img></td>
+          
         </tr>
         </c:forEach>
         </table>
