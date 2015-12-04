@@ -8,9 +8,10 @@
     <packaging>war</packaging>
 
     <name>videogameApp</name>
- <properties>
-        <org.springframework.version>4.2.2.RELEASE</org.springframework.version>
-         <spring-security.version>4.0.3.RELEASE</spring-security.version>
+
+    <properties>
+        <org.springframework.version>4.0.5.RELEASE</org.springframework.version>
+        <spring-security.version>4.0.0.RELEASE</spring-security.version>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -60,24 +61,6 @@
             <version>1.0.2</version>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>2.5.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-            <version>2.5.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-rest-core</artifactId>
-            <version>2.1.1.RELEASE</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
@@ -85,12 +68,11 @@
         </dependency>
         
         <!-- added to support Spring Security -->
-                <dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>4.0.3.RELEASE</version>
-                        <type>jar</type>
-                </dependency> 
+            <version>${spring-security.version}</version>
+        </dependency> 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -114,23 +96,18 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>1.9.0.RELEASE</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.mysema.querydsl</groupId>
-            <artifactId>querydsl-core</artifactId>
-            <version>3.6.8</version>
+            <version>1.7.4.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>com.mysema.querydsl</groupId>
-            <artifactId>querydsl-apt</artifactId>
-            <version>3.6.8</version>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-rest-webmvc</artifactId>
+            <version>2.1.1.RELEASE</version>
         </dependency>
+
         <dependency>
-            <groupId>com.mysema.querydsl</groupId>
-            <artifactId>querydsl-jpa</artifactId>
-            <version>3.6.8</version>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+            <version>0.17.0.RELEASE</version>
         </dependency>
 
         <!--
@@ -313,13 +290,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.7.12</version>
-        </dependency>    
-        
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.5.3</version>
-        </dependency>  
+        </dependency>     
     </dependencies>
 
     <build>
