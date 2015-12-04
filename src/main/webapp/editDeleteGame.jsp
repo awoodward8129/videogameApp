@@ -18,137 +18,90 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.js"></script>
         <title>Edit/Delete Book</title>
-               <Script>
-     $(document).ready(function () {
-
-$('#updateForm').validate({
-    rules: {
-        title: {
-            minlength: 1,
-            required: true
-        },
-        system: {
-            minlength: 1,
-            required: true
-        },
-        logDate: {
-            required: true
-        },
-        price: {
-            required: true,
-            number: true
-        },
-        image: {
-            required: true
-        },
-
-    },
-    highlight: function (element) {
-        $(element).closest('.control-group').removeClass('success').addClass('error');
-    },
-    success: function (element) {
-        element.text('OK!').addClass('valid')
-            .closest('.control-group').removeClass('error').addClass('success');
-    }
-     
-
-});
-});
-        </Script>
+        <Script src="validation.js">     </Script>
     </head>
-    <body>
-        
-        <div class="container">
+    
+      <body>
+         <div class="container">
                  
                 
             <h2>Update a game</h2>
-             </div>
+            
         <div class="row container">
             <div class="col-md-4">
-                <form id="updateForm" method="POST" action="VideogameController?action=delete" role="form" >
-                    
-         
-                        <input class="form-control" type="hidden" name="gameId" value="${gameId}" />
-                
-                   <div class="control-group">
-            <label class="control-label" for="name">Title</label>
-            <div class="controls">
-                <input type="text" name="title" id="name" value="${title}">
-            </div>
-        </div>
-                 <div class="control-group">
-            <label class="control-label" for="system">System</label>
-            <div class="controls">
-                <input type="text" name="system" id="system"value="${system}">
-            </div>
-        </div>
-       <div class="control-group">
-            <label class="control-label" for="logDate">Log Date</label>
-            <div class="controls">
-                <input type="date" name="logDate" id="logDate"  value="${logDate}">
-            </div>
-        </div>
-            <div class="control-group">
-            <label class="control-label" for="price">Price</label>
-            <div class="controls">
-                <input type="text" name="price" id="price"value="${price}">
-            </div
-               <div class="control-group">
-            <label class="control-label" for="image">Image URL</label>
-            <div class="controls">
-                <input type="text" name="image" id="image" value="${image}">
-            </div>
-        </div>
-              <button class="btn btn-danger" name="submit" value="delete" type="submit" >delete</button>
-              <button class="btn btn-success" name="submit"  value="update" type="submit">Update Game</button>
-        </form>
-                
-            </div>
+               
             
-        </div>
-        
-        
-        
-        
-        
-        
-        <!--  <form method="POST" action="VideogameController?action=delete">
+    
+    
+       <form method="POST" action="VideogameController?action=deleteOrEdit" role="form">
             <table>
-                 <tr>
+                   <c:choose>
+                    <c:when test="${not empty game}">
+                        <tr>
+                            <td style="background-color: black;color:white;" align="left">ID</td>
+                            <td align="left"><input type="text" value="${game.videogameId}" name="gameId" id="gameId" readonly/></td>
+                        </tr>         
+                    </c:when>
+                </c:choose>
+                        
+                 <c:choose>
+                    <c:when test="${not empty game}">
+                <tr>
                     <td>
-                  <input type="hidden" name="gameId" value="${gameId}" />
-                    </td>
+                  Name <input type="text" name="title" value="${game.title}"/>
+                    </td>.
                 </tr>
+                          <tr>
+                <td>
+                    
+            Date Added <input type="text" name="logDate" value= "${game.logDate}"/>
+                </td>
+            </tr>
+                     <tr>
+                <td>
+                    
+            price <input type="text" name="price" value= "${game.price}"/>
+                </td>
+            </tr>
+                     <tr>
+                <td>
+                    
+            System <input type="text" name="system" value= "${game.system}"/>
+                </td>
+            </tr>
+                   <tr>
+                <td>
+                    
+            ImageUrl <input type="text" name="imageUrl" value= "${game.imageUrl}"/>
+                </td>
+            </tr>
+               
+                  </c:when>
+                </c:choose>
+              
+
                 
-                <tr>
-                    <td>
-                   Title <input type="text" name="title" value="${title}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-            System <input type="text" name="system" value="${system}"/>
-                    </td>
-            </tr>
-           
-               <tr>
-                <td>
-                    
-            Date Published <input type="date" name="logDate" value= "${logDate}"/>
+                        <tr>
+                    <td style="background-color: black;color:white;" align="left">Author</td>
+                    <td align="left">
+                    <select id="authorDropDown" name="systemId">
+                    <c:choose>
+                        <c:when test="${not empty game.systemId}">
+                            
+                            <c:forEach var="system" items="${systems}">                                       
+                                <option value="${system.systemId}" <c:if test="${game.systemId.systemId == system.systemId}">selected</c:if>>${system.systemName}</option>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                        <option value="">None</option>
+                         </c:otherwise>
+                    </c:choose>
+                    </select>
                 </td>
-            </tr>
-             <tr>
-                <td>
-                    
-             Price <input type="text" name="price" value= "${price}"/>
-                </td>
-            </tr>
-               <tr>
-                <td>
-                    
-             Image <input type="text" name="image" value= "${image}"/>
-                </td>
-            </tr>
+
+                  
+             
+               
             <tr>
                 <td>
                     <button id="submit" name="submit" value="delete" type="submit" >delete</button>
@@ -158,6 +111,6 @@ $('#updateForm').validate({
                 </td>
             </tr>
              </table>
-        </form>-->
+        </form>
     </body>
 </html>

@@ -20,15 +20,7 @@
         <title>Games List</title>
     </head>
     <body >
-      <!--  <h1>Session Demo</h1>
-        <form method="POST" action="VideogameController?action=session">
-            Enter page background color (per user): <input name="color" value="" /> <br>
-            Enter font color (per application): <input name="fontColor" value="" /> <br>
-            <input name="submit" value="Submit" type="submit">
-        </form>
-      <!--  <p><a href="page2.jsp">Click here</a> to go to Page 2</p>
-        <p><a href="testsession.jsp">Click here</a> for Session Status</p>
-        <h3 style='color: ${fontColor};'>For comparison, this font color comes from application scope</h3>-->
+       
       
       <div class="text-right">
           <a href="#" >
@@ -66,11 +58,11 @@
                 <th align="right" class="tableHead">Date Logged</th>
                 <th align="left" class="tableHead">Price</th>
                 <th align="left" class="tableHead">Image</th>
-                <th></th>
+                  <th align="left" class="tableHead">SystemId</th>
             </tr>
         <c:forEach var="b" items="${games}" varStatus="rowCount">
           
-            <td align="left">${b.gameId}</td>
+            <td align="left">${b.videogameId}</td>
             <td align="left">${b.title}</td>
             <td align="left">${b.system}</td>
             
@@ -81,8 +73,12 @@
             
             
              <td align="left">${b.price}</td>
-            <td align="left"><img src =${b.image}/></td>
-            <td><a class="btn btn-primary" href="VideogameController?action=editDeleteButton&gameId=${b.gameId}&title=${b.title}&system=${b.system}&logDate=${b.logDate}&price=${b.price}&image=${b.image}">Edit or Delete</a></td>
+            
+           
+            <td align="left"><img src ="${b.imageUrl}"></img></td>
+            
+                <td align="left">${b.systemId.systemName}</td>
+            <td><a class="btn btn-primary" href="VideogameController?action=editDeleteButton&gameId=${b.videogameId}&title=${b.title}&system=${b.system}&logDate=${b.logDate}&price=${b.price}&image=${b.imageUrl}">Edit or Delete</a></td>
             
         </tr>
         </c:forEach>
