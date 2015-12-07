@@ -2,7 +2,6 @@ package edu.wctc.adw.videogameapp.service;
 
 
 import edu.wctc.adw.videogameapp.entity.Videogame;
-import edu.wctc.adw.videogameapp.repository.CustomerRepository;
 import edu.wctc.adw.videogameapp.repository.VideogameRepository;
 import java.util.List;
 import org.slf4j.Logger;
@@ -29,8 +28,6 @@ public class VideogameService {
     @Autowired
     private VideogameRepository videogameRepo;
 
-    @Autowired
-    private CustomerRepository bookRepo;
 
     public VideogameService() {
     }

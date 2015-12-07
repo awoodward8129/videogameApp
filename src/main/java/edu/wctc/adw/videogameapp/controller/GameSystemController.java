@@ -37,7 +37,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * dbClass.newInstance();
  */
 //@WebServlet(name = "systemController", urlPatterns = {"/systemController"})
-public class SystemController extends HttpServlet {
+public class GameSystemController extends HttpServlet {
 
     // NO MAGIC NUMBERS!
     private static final String NO_PARAM_ERR_MSG = "No request parameter identified";
@@ -92,7 +92,11 @@ public class SystemController extends HttpServlet {
                 String systemId = request.getParameter("systemId");
 
 //       
-                system = systemService.findById(systemId);
+                       system = systemService.findByIdAndFetchGamesEagerly(systemId);
+                       if(system == null){
+                       system = systemService.findById(systemId);
+                       }
+
                 request.setAttribute("system", system);
                 List<Videogame> videogames = videogameService.findAll();
                 request.setAttribute("videogames", videogames);
@@ -111,7 +115,8 @@ public class SystemController extends HttpServlet {
             } else if (action.equals(DELETE_ACTION)) {
 
                 String systemId = request.getParameter("systemId");
-
+                
+          
                 system = systemService.findById(systemId);
 
                 String submitType = request.getParameter("submit");

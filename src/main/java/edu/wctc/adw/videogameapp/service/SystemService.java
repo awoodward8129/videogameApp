@@ -42,9 +42,9 @@ public class SystemService {
         return systemRepo.findOne(new Integer(id));
     }
     
-      public System findByIdAndFetchSystemEagerly(String id){
+      public System findByIdAndFetchGamesEagerly(String id){
     Integer systemId = new Integer(id);
-    return systemRepo.findByIdAndFetchSystemsEagerly(systemId);
+    return systemRepo.findByIdAndFetchGamesEagerly(systemId);
     }
     
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)

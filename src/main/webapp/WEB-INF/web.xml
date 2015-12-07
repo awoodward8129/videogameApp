@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-            <!-- Begin Spring-specific configuration -->
+    <!-- Begin Spring-specific configuration -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
-        
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -14,8 +12,7 @@
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
     <!-- END Spring configuration -->
-    
-       <!-- begin additional Spring Security config -->
+    <!-- begin additional Spring Security config -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -25,7 +22,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!-- end Spring security config -->
-
     <servlet>
         <servlet-name>VideogameController</servlet-name>
         <servlet-class>edu.wctc.adw.videogameapp.controller.VideogameController</servlet-class>
@@ -34,12 +30,12 @@
         <servlet-name>VideogameController</servlet-name>
         <url-pattern>/VideogameController</url-pattern>
     </servlet-mapping>
-        <servlet>
+    <servlet>
         <servlet-name>SystemController</servlet-name>
-        <servlet-class>edu.wctc.adw.videogameapp.controller.SystemController</servlet-class>
-        </servlet>
-         <servlet-mapping>
+        <servlet-class>edu.wctc.adw.videogameapp.controller.GameSystemController</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>SystemController</servlet-name>
         <url-pattern>/SystemController</url-pattern>
     </servlet-mapping>
-    </web-app>
+</web-app>

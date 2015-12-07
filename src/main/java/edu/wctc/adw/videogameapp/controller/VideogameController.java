@@ -62,6 +62,8 @@ public class VideogameController extends HttpServlet {
     private static final String DELETE_OR_EDIT_ACTION = "deleteOrEdit";
     private static final String ACTION_PARAM = "action";
     private static final String ACTION_REDIRECT = "redirect";
+        private static final String LIST_REST_PAGE = "listGameRest.html";
+        private static final String ACTION_LIST_REST = "listRest";
     private int userCount = 0;
 
     // Get init params from web.xml
@@ -172,6 +174,9 @@ public class VideogameController extends HttpServlet {
                     videogameService.edit(game);
                 }
                 getListOfVideogamesWithListPageDestination(request, videogameService);
+            } else if(action.equals(ACTION_LIST_REST)){
+            
+            destination = LIST_REST_PAGE;
             } else {
                 request.setAttribute("errMsg", NO_PARAM_ERR_MSG);
                 destination = LIST_PAGE;

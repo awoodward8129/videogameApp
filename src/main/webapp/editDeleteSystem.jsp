@@ -33,6 +33,30 @@
                 </tr>
                
                       <tr>
+                          
+                          
+                            <c:choose>
+                    <c:when test="${not empty system.videogameSet}">
+                        <tr>
+                            <td style="background-color: black;color:white;" align="left">Books</td>
+                            <td>
+                                <select id="booksDropDown" name="systemId">
+                                    <c:forEach var="videogame" items="${system.videogameSet}" varStatus="rowCount">                                       
+                                        <option value="${videogame.videogameId}">${videogame.title}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <tr>
+                            <td style="background-color: black;color:white;" align="left">Books</td>
+                            <td>None</td>
+                        </tr>
+                    </c:otherwise>
+                </c:choose>
+                
+                          
                 <td>
                     <button id="submit" name="submit" value="delete" type="submit" >delete</button>
                 </td>

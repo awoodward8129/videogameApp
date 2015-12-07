@@ -45,7 +45,7 @@ public class System implements Serializable {
     @Size(max = 45)
     @Column(name = "systemName")
     private String systemName;
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "systemId", cascade = CascadeType.ALL)
+   @OneToMany(fetch = FetchType.EAGER, mappedBy = "systemId", orphanRemoval=true)
     private Set<Videogame> videogameSet;
 
     public System() {
